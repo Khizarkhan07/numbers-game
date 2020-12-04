@@ -14,13 +14,12 @@ export const Button: React.FC<buttonProps> = ({icon, text, color ,disabled ,call
         background: color,
         width: '25%',
     }
-    console.log(disabled)
     return (
         <button
             disabled={disabled}
             style={styles}
             onClick={callback}
-            className="btn btn-light btn-outline mb-1"
+            className="btn btn-light btn-outline mb-1 mt-1"
         >
             {icon && <i className={icon + " mr-1"}/>}
             {text && <span>{text}</span>}

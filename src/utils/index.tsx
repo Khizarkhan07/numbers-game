@@ -1,7 +1,6 @@
 import {gameStateType} from "../types";
 
 export const generateRandom = (state: gameStateType) => {
-    console.log(state.numbers.length, "lenghth")
     var nums = state.numbers,
         ranNums ,
         j = 0;
@@ -9,3 +8,18 @@ export const generateRandom = (state: gameStateType) => {
         ranNums = nums[j];
     return [(ranNums as number), j];
 }
+
+export const compareAnswer = (state : gameStateType, guess: string[])=> {
+    const gameState = state.gameState.map(String)
+    let result = false;
+    if(JSON.stringify(gameState)==JSON.stringify(guess))
+        result = true;
+
+    if(result) {
+        return 'WIN'
+    }
+    else  {
+        return 'LOST'
+    }
+}
+
