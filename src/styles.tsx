@@ -16,6 +16,9 @@ export const Circle = styled.ul`
   
 `;
 
+export const ButtonWrapper = styled.div`
+    margin-left: 43%;
+`
 export const SliceWrapper = styled.li<SliceProps>`
   overflow: hidden;
   position: absolute;

@@ -1,23 +1,32 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import './App.css';
 import Slice from "./components/Slice";
-import {Circle, SliceWrapper} from "./styles";
+import {ButtonWrapper, Circle, SliceWrapper} from "./styles";
 import {useGameContext} from "./context/gameContext";
+import {Button} from "./components/Button";
 
 const App = () => {
     const {state, dispatch} = useGameContext();
-    console.log(state)
-    useEffect(()=> {
-        for (var i=1000 ; i<= 5000; i +=1000) {
-            setTimeout(function() {
-                dispatch({type: 'ADD_NUMBER'})
+    const handleStart = useCallback(()=> {
+        for (var i=1 ; i<= 12; i ++) {
+             setTimeout(function() {
+                dispatch({type: 'START'})
+            },  i*1000)
 
-            }, i)
         }
-    },[])
+    }, [state])
+
+
+    const Buttons = useMemo(()=> {
+        return (
+            <ButtonWrapper>
+                <Button callback={handleStart} text='START' color='#5acba1'/>
+            </ButtonWrapper>
+        )
+    },[true])
+
     return (
         <div>
-            <h4>{state.gameState}</h4>
             <Circle>
                 <SliceWrapper value={state.gameState[state.gameState.length-1]}>
                     <Slice value={1} ></Slice>
@@ -56,6 +65,7 @@ const App = () => {
                     <Slice value={12} ></Slice>
                 </SliceWrapper>
             </Circle>
+            {Buttons}
         </div>
   );
 }
