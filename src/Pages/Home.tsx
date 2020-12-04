@@ -11,7 +11,7 @@ const Home = () => {
     const [stateValue, setStateValue] = useState({guess: ''})
 
     const handleStart = useCallback(()=> {
-        for (let i=1 ; i<= 3; i ++) {
+        for (let i=1 ; i<= 12; i ++) {
             setTimeout(function() {
                 dispatch({type: 'START'})
             },  i*1000)
@@ -43,10 +43,9 @@ const Home = () => {
     const Buttons = useMemo(()=> {
         return (
             <ButtonWrapper>
-                <Button callback={handleStart} text='START' color='#5acba1'/>
-                <br/>
-                {state.gameState.length === 3 && (<Button callback={handleReset} text='RESET' color='#fc5603'/>
-                )}
+                {state.gameState.length === 12 ?
+                    (<Button callback={handleReset} text='RESET' color='#fc5603'/>) :
+                    (<Button callback={handleStart} text='START' color='#5acba1'/>)}
             </ButtonWrapper>
         )
     },[state.gameState])
