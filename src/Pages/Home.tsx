@@ -43,11 +43,14 @@ const Home = () => {
         for (let i=1 ; i<= state.level; i ++) {
             setTimeout(function() {
                 dispatch({type: 'START'})
-            },  i*1000)
+            },  i*1000*0.95)
 
         }
     }, [state.level])
 
+    const handleNewGame = useCallback(() => {
+        dispatch({type: 'NEW_GAME'})
+    },[])
     const Buttons = useMemo(()=> {
         return (
             <ButtonWrapper>
@@ -82,6 +85,14 @@ const Home = () => {
         )
     }, [state.previousLevel, state.level])
 
+    const newGame = useMemo(()=> {
+        return (
+            <ButtonWrapper>
+                <Button text='NEW GAME' color='#fcba03' callback={handleNewGame}/>
+            </ButtonWrapper>
+        )
+    },[true])
+
     let circleSlices =[];
 
     for (let i =1 ; i<= state.level; i++){
@@ -97,6 +108,7 @@ const Home = () => {
         <div className={"container"}>
 
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
+            {newGame}
             <Circle>
                 {circleSlices}
             </Circle>

@@ -7,6 +7,7 @@ const RESET = 'RESET'
 const CHECK = 'CHECK'
 const NEXT_LEVEL = 'NEXT_LEVEL'
 const SET_LEVEL = 'SET_LEVEL'
+const NEW_GAME = 'NEW_GAME'
 export const initialState = {
     gameState: [],
     numbers : [1,2,3,4,5],
@@ -78,6 +79,16 @@ const gameReducer = (state: gameStateType, action: actionType) => {
                 level: level,
                 numbers: numberState(level)
             };
+        }
+        case NEW_GAME : {
+            storeLevel(4);
+            return  {
+                gameState: [],
+                numbers : [1,2,3,4,5],
+                status: 'PENDING',
+                level : 5,
+                previousLevel: 4
+            }
         }
         default: return state;
     }
