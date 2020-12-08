@@ -9,26 +9,16 @@ import {Input} from "antd";
 const Home = () => {
     const {state, dispatch} = useGameContext();
     const [stateValue, setStateValue] = useState({guess: ''})
-
-    const handleStart = useCallback(()=> {
-        for (let i=1 ; i<= 12; i ++) {
-            setTimeout(function() {
-                dispatch({type: 'START'})
-            },  i*1000)
-
-        }
-    }, [state])
+    console.log(state.level)
 
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=> {
+    const handleChange = useCallback((e:React.ChangeEvent<HTMLInputElement>)=> {
         const value = e.target.value;
-        const name = e.target.name;
-        console.log(value, name)
         setStateValue({
             ...stateValue,
             [e.target.name]: value
         });
-    }
+    }, [stateValue])
 
     const checkAnswer = useCallback(()=> {
         dispatch({type: 'CHECK', payload: {guess: stateValue.guess}})
@@ -36,19 +26,33 @@ const Home = () => {
         setStateValue({guess: ''});
     }, [stateValue])
 
+    const handleNextLevel = useCallback(()=> {
+        dispatch({type: 'NEXT_LEVEL'})
+    }, [state.level])
+
     const handleReset = useCallback(()=> {
         dispatch({type: 'RESET'})
     },[true])
 
+
+    const handleStart = useCallback(() => {
+        for (let i=1 ; i<= state.level; i ++) {
+            setTimeout(function() {
+                dispatch({type: 'START'})
+            },  i*1000)
+
+        }
+    }, [state.level])
+
     const Buttons = useMemo(()=> {
         return (
             <ButtonWrapper>
-                {state.gameState.length === 12 ?
+                {state.gameState.length === state.level ?
                     (<Button callback={handleReset} text='RESET' color='#fc5603'/>) :
                     (<Button callback={handleStart} text='START' color='#5acba1'/>)}
             </ButtonWrapper>
         )
-    },[state.gameState])
+    },[state.gameState, state.level])
 
     const inputFields = useMemo(() => {
         return (
@@ -65,59 +69,37 @@ const Home = () => {
         </ButtonWrapper>
     }, [stateValue])
 
-    const circle = useMemo(() => {
+    const nextButton = useMemo(()=> {
         return (
-            <Circle>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={1} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={2} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={3} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={4} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={5} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={6} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={7} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={8} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={9} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={10} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={11} ></Slice>
-                </SliceWrapper>
-                <SliceWrapper value={state.gameState[state.gameState.length-1]}>
-                    <Slice value={12} ></Slice>
-                </SliceWrapper>
-            </Circle>
+            <ButtonWrapper>
+                {state.previousLevel === state.level  && state.level <13 &&
+                    (<Button callback={handleNextLevel} text='NEXT LEVEL' color='#fcba03'/>)}
+            </ButtonWrapper>
         )
-    }, [state.gameState])
+    }, [state.previousLevel, state.level])
+
+    let circleSlices =[];
+
+    for (let i =1 ; i<= state.level; i++){
+       circleSlices.push(
+           <SliceWrapper key={i} value={state.gameState[state.gameState.length-1]}>
+               <Slice value={i} ></Slice>
+           </SliceWrapper>
+       )
+    }
+
 
     return (
         <div className={"container"}>
 
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
-            {circle}
+            <Circle>
+                {circleSlices}
+            </Circle>
             {Buttons}
             {inputFields}
             {checkButton}
-
-
+            {nextButton}
         </div>
     );
 }

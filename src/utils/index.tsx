@@ -23,3 +23,15 @@ export const compareAnswer = (state : gameStateType, guess: string[])=> {
     }
 }
 
+
+export const numberState = (level : number) => {
+    let numbers = []
+    for (let i = 1 ; i<= level ; i++){
+        numbers.push(i);
+    }
+    return numbers
+}
+
+export const storeLevel = (level: number) => {
+    localStorage.setItem('level', JSON.stringify(level));
+}

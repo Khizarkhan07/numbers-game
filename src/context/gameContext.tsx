@@ -1,14 +1,17 @@
 import React, {createContext, ReactNode, useContext, useReducer} from "react";
 import { gameStateType, actionType} from "../types";
-import {compareAnswer, generateRandom} from "../utils";
+import {compareAnswer, generateRandom, numberState} from "../utils";
 
 const START = 'START'
 const RESET = 'RESET'
 const CHECK = 'CHECK'
+const NEXT_LEVEL = 'NEXT_LEVEL'
 export const initialState = {
     gameState: [],
-    numbers : [1,2,3,4,5,6,7,8,9,10,11,12],
-    status: 'PENDING'
+    numbers : [1,2,3,4,5],
+    status: 'PENDING',
+    level : 5,
+    previousLevel: 4
 }
 
 const GameContext = createContext<{
@@ -34,15 +37,32 @@ const gameReducer = (state: gameStateType, action: actionType) => {
             return  {
                 ...state,
                 gameState: [],
-                numbers: [1,2,3,4,5,6,7,8,9,10,11,12]
+                numbers: numberState(state.level)
             };
         }
         case CHECK : {
             const guess = action.payload.guess.split(",")
             const result = compareAnswer(state, guess)
+            if(result === 'WIN'){
+                return {
+                    ...state,
+                    status: result,
+                    previousLevel: state.previousLevel+1
+                }
+            }
+            else  {
+                return {
+                    ...state,
+                    status: result
+                }
+            }
+
+        }
+        case NEXT_LEVEL : {
             return {
-             ...state,
-             status: result
+                ...state,
+                level: state.level + 1,
+                numbers: numberState(state.level+1)
             }
         }
         default: return state;
