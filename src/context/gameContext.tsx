@@ -1,11 +1,12 @@
 import React, {createContext, ReactNode, useContext, useReducer} from "react";
 import { gameStateType, actionType} from "../types";
-import {compareAnswer, generateRandom, numberState} from "../utils";
+import {compareAnswer, generateRandom, numberState, storeLevel} from "../utils";
 
 const START = 'START'
 const RESET = 'RESET'
 const CHECK = 'CHECK'
 const NEXT_LEVEL = 'NEXT_LEVEL'
+const SET_LEVEL = 'SET_LEVEL'
 export const initialState = {
     gameState: [],
     numbers : [1,2,3,4,5],
@@ -59,11 +60,24 @@ const gameReducer = (state: gameStateType, action: actionType) => {
 
         }
         case NEXT_LEVEL : {
-            return {
+
+            const newState = {
                 ...state,
                 level: state.level + 1,
                 numbers: numberState(state.level+1)
             }
+            storeLevel(newState.level)
+
+            return newState;
+        }
+        case SET_LEVEL : {
+            const level = action.payload.level
+
+            return {
+                ...state,
+                level: level,
+                numbers: numberState(level)
+            };
         }
         default: return state;
     }

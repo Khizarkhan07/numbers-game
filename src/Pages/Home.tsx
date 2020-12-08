@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useGameContext} from "../context/gameContext";
 import {ButtonWrapper, Circle, InputWrapper, SliceWrapper} from "../styles";
 import {Button} from "../components/Button";
@@ -11,7 +11,11 @@ const Home = () => {
     const [stateValue, setStateValue] = useState({guess: ''})
     console.log(state.level)
 
-
+    useEffect(()=>{
+        if(localStorage.getItem('level')){
+            dispatch({type: 'SET_LEVEL', payload : {level: localStorage.getItem('level')}})
+        }
+    },[])
     const handleChange = useCallback((e:React.ChangeEvent<HTMLInputElement>)=> {
         const value = e.target.value;
         setStateValue({
