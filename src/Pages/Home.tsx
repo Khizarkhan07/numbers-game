@@ -108,7 +108,7 @@ const Home = () => {
         <div className={"container"}>
 
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
-            {newGame}
+
             <Circle>
                 {circleSlices}
             </Circle>
