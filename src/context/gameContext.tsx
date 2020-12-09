@@ -1,6 +1,6 @@
 import React, {createContext, ReactNode, useContext, useReducer} from "react";
 import { gameStateType, actionType} from "../types";
-import {compareAnswer, generateRandom, numberState, storeLevel} from "../utils";
+import {compareAnswer, generateRandom, numberState, removeLevel, storeLevel} from "../utils";
 
 const START = 'START'
 const RESET = 'RESET'
@@ -81,8 +81,9 @@ const gameReducer = (state: gameStateType, action: actionType) => {
             };
         }
         case NEW_GAME : {
-            storeLevel(4);
+            removeLevel()
             return  {
+                ...state,
                 gameState: [],
                 numbers : [1,2,3,4,5],
                 status: 'PENDING',

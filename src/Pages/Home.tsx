@@ -91,7 +91,7 @@ const Home = () => {
                 <Button text='NEW GAME' color='#fcba03' callback={handleNewGame}/>
             </ButtonWrapper>
         )
-    },[true])
+    },[state])
 
     let circleSlices =[];
 
@@ -108,7 +108,7 @@ const Home = () => {
         <div className={"container"}>
 
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
-
+            {newGame}
             <Circle>
                 {circleSlices}
             </Circle>

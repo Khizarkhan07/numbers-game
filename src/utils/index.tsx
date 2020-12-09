@@ -35,3 +35,7 @@ export const numberState = (level : number) => {
 export const storeLevel = (level: number) => {
     localStorage.setItem('level', JSON.stringify(level));
 }
+
+export const removeLevel = () => {
+    localStorage.removeItem('level')
+}
