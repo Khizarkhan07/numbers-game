@@ -1,17 +1,13 @@
 import React, {createContext, ReactNode, useContext, useReducer} from "react";
 import {  actionType, multiplayerGameStateType} from "../types";
-import {
-    compareMultiPlayerAnswer,
-    generateRandomMultiPlayer,
-
-} from "../utils";
+import {compareAnswer, generateRandom,} from "../utils";
 
 const START_PLAYER_1 = 'START_PLAYER_1'
 const START_PLAYER_2 = 'START_PLAYER_2'
-const RESET = 'RESET'
 const CHECK_PLAYER_1 = 'CHECK_PLAYER_1'
 const CHECK_PLAYER_2 = 'CHECK_PLAYER_2'
 const NEW_GAME = 'NEW_GAME'
+const RESET = 'RESET'
 export const initialState = {
     gameState_player_1: [],
     gameState_player_2: [],
@@ -32,7 +28,7 @@ const MultiplayerGameContext = createContext<{
 const multiplayerGameReducer = (state: multiplayerGameStateType, action: actionType) => {
     switch (action.type) {
         case START_PLAYER_1 :{
-            const result = generateRandomMultiPlayer(state.numbers_player_1)
+            const result = generateRandom(state.numbers_player_1)
             return {
                 ...state,
                 gameState_player_1 :[ ...state.gameState_player_1, (result[0] as number)],
@@ -40,7 +36,7 @@ const multiplayerGameReducer = (state: multiplayerGameStateType, action: actionT
             };
         }
         case START_PLAYER_2 :{
-            const result = generateRandomMultiPlayer(state.numbers_player_2)
+            const result = generateRandom(state.numbers_player_2)
             return {
                 ...state,
                 gameState_player_2 :[ ...state.gameState_player_2, (result[0] as number)],
@@ -58,7 +54,7 @@ const multiplayerGameReducer = (state: multiplayerGameStateType, action: actionT
         }
         case CHECK_PLAYER_1 : {
             const guess = action.payload.guess.split(",")
-            const result = compareMultiPlayerAnswer(state.gameState_player_1, guess)
+            const result = compareAnswer(state.gameState_player_1, guess)
             if(result === 'CORRECT GUESS'){
                 return {
                     ...state,
@@ -76,7 +72,7 @@ const multiplayerGameReducer = (state: multiplayerGameStateType, action: actionT
 
         case CHECK_PLAYER_2 : {
             const guess = action.payload.guess.split(",")
-            const result = compareMultiPlayerAnswer(state.gameState_player_2, guess)
+            const result = compareAnswer(state.gameState_player_2, guess)
             if(result === 'CORRECT GUESS'){
                 return {
                     ...state,

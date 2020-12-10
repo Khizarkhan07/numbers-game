@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {ButtonWrapper, Circle, InputWrapper, SliceWrapper} from "../styles";
 import {Button} from "../components/Button";
 import StatusBanner from "../components/StatusBanner";
@@ -8,7 +8,7 @@ import useTimer from "../hooks/useTimer";
 import {formatTime} from "../utils";
 import {useMultiplayerGameContext} from "../context/multiplayerGameContext";
 
-const Multiplayer = () => {
+const Multiplayer: React.FC = () => {
     const { timer, handlePause, handleTimerStart, handleTimerReset } = useTimer(0)
     const { timer: timer1, handlePause : handlePause1, handleTimerStart : handleTimerStart1, handleTimerReset: handleTimerReset1 } = useTimer(0)
 

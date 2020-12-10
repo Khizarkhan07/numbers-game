@@ -1,5 +1,3 @@
-
-
 export type gameStateType = {
     gameState: number[]
     numbers: number[]

@@ -27,7 +27,7 @@ const GameContext = createContext<{
 const gameReducer = (state: gameStateType, action: actionType) => {
     switch (action.type) {
         case START :{
-            const result = generateRandom(state)
+            const result = generateRandom(state.numbers)
             return {
                 ...state,
                 gameState :[ ...state.gameState, (result[0] as number)],
@@ -44,8 +44,8 @@ const gameReducer = (state: gameStateType, action: actionType) => {
         }
         case CHECK : {
             const guess = action.payload.guess.split(",")
-            const result = compareAnswer(state, guess)
-            if(result === 'WIN'){
+            const result = compareAnswer(state.gameState, guess)
+            if(result === 'CORRECT GUESS'){
                 return {
                     ...state,
                     status: result,

@@ -1,11 +1,11 @@
 import React from 'react';
 import {GameProvider} from "../context/gameContext";
-import Home from "./Home";
+import SinglePlayerGame from "./SinglePlayerGame";
 
-const SinglePlayer = () => {
+const SinglePlayer:React.FC = () => {
     return (
         <GameProvider>
-            <Home/>
+            <SinglePlayerGame/>
         </GameProvider>
     );
 }

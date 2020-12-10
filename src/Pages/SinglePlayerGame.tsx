@@ -5,9 +5,8 @@ import {Button} from "../components/Button";
 import StatusBanner from "../components/StatusBanner";
 import Slice from "../components/Slice";
 import {Input} from "antd";
-import {formatTime} from "../utils";
 
-const Home = () => {
+const SinglePlayerGame:React.FC = () => {
 
     const {state, dispatch} = useGameContext();
     const [stateValue, setStateValue] = useState({guess: ''})
@@ -121,4 +120,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default SinglePlayerGame;

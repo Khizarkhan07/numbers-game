@@ -1,49 +1,26 @@
-import { useState, useRef, useContext } from 'react';
+import {useState, useRef, useCallback} from 'react';
 
 const useTimer = (initialState = 0) => {
 
-
-
     const [timer, setTimer] = useState(initialState)
-    const [isActive, setIsActive] = useState(false)
-    const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(0)
 
-    const handleTimerStart = () => {
-        setIsActive(true)
-        setIsPaused(true)
-
+    const handleTimerStart = useCallback(() => {
         countRef.current = setInterval(() => {
             setTimer((timer) => timer + 1)
         }, 1000)
-    }
+    },[timer])
 
-    const handlePause = () => {
-        //dispatch({type: 'PAUSE', payload: timer})
+    const handlePause =  useCallback(() => {
         clearInterval(countRef.current)
-        setIsPaused(false)
-    }
+    },[true])
 
-    const handleSplit = () => {
-        //dispatch({type: 'SPLIT', payload: timer})
-
-    }
-
-    const handleResume = () => {
-        setIsPaused(true)
-        countRef.current = setInterval(() => {
-            setTimer((timer) => timer + 1)
-        }, 1000)
-    }
-
-    const handleTimerReset = () => {
+    const handleTimerReset = useCallback(() => {
         clearInterval(countRef.current)
-        setIsActive(false)
-        setIsPaused(false)
         setTimer(0)
-    }
+    },[true])
 
-    return { timer, isActive, isPaused, handleTimerStart, handlePause, handleResume, handleTimerReset, handleSplit }
+    return { timer, handleTimerStart, handlePause, handleTimerReset }
 }
 
 export default useTimer

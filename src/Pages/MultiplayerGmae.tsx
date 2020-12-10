@@ -2,7 +2,7 @@ import React from 'react';
 import {MultiplayerGameProvider} from "../context/multiplayerGameContext";
 import Multiplayer from "./Multiplayer";
 
-const MultiplayerGmae = () => {
+const MultiplayerGmae:React.FC = () => {
     return (
         <MultiplayerGameProvider>
             <Multiplayer/>

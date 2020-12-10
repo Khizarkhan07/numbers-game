@@ -1,6 +1,5 @@
 import React from "react";
 
-
 type buttonProps = {
     icon?: string ;
     text?: string ;
