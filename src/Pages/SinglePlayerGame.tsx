@@ -50,7 +50,12 @@ const SinglePlayerGame:React.FC = () => {
 
     const handleNewGame = useCallback(() => {
         dispatch({type: 'NEW_GAME'})
-    },[])
+    },[true])
+
+    const handleModChange = useCallback(() => {
+        window.location.href= '/multiplayer'
+    }, [true])
+
     const Buttons = useMemo(()=> {
         return (
             <ButtonWrapper>
@@ -93,6 +98,12 @@ const SinglePlayerGame:React.FC = () => {
         )
     },[state])
 
+    const modChangeButton  = useMemo(() => {
+        return (
+            <Button color="#ff8c66" text={'Go Double Player'} callback={handleModChange}/>
+        )
+    }, [true])
+
     let circleSlices =[];
 
     for (let i =1 ; i<= state.level; i++){
@@ -107,6 +118,8 @@ const SinglePlayerGame:React.FC = () => {
     return (
         <div className={"container"}>
 
+            {modChangeButton}
+            <hr/>
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
             {newGame}
             <Circle>

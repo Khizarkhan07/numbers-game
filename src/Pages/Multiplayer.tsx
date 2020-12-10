@@ -67,6 +67,9 @@ const Multiplayer: React.FC = () => {
         dispatch({type: 'NEW_GAME'})
     },[true])
 
+    const handleModChange = useCallback(() => {
+        window.location.href= '/number-game'
+    }, [true])
     const StartButtonPlayer1 = useMemo(()=> {
         return (
             <ButtonWrapper>
@@ -148,6 +151,12 @@ const Multiplayer: React.FC = () => {
         )
     }
 
+    const modChangeButton  = useMemo(() => {
+        return (
+            <Button color="#ff8c66" text={'Go Single Player'} callback={handleModChange}/>
+        )
+    }, [true])
+
     let circleSlices_player2 =[];
 
     for (let i =1 ; i<= 12; i++){
@@ -161,6 +170,8 @@ const Multiplayer: React.FC = () => {
 
     return (
         <div className={"container"}>
+            {modChangeButton}
+            <hr/>
             {newGame}
             {state.player1_status === 'CORRECT GUESS' && state.player2_status !== 'PENDING' && timer < timer1
                 &&  (<StatusBanner status={"PLAYER 1 WINS"}/>)}
