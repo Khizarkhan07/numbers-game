@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {GameProvider} from "./context/gameContext";
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-      <GameProvider>
-          <App />
-      </GameProvider>
-  </React.StrictMode>,
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>,
   document.getElementById('root')
 );
 
