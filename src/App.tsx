@@ -1,10 +1,17 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import Home from "./Pages/Home";
+import { Switch, Route, withRouter} from 'react-router';
+import SinglePlayer from "./Pages/SinglePlayer";
+import MultiplayerGmae from "./Pages/MultiplayerGmae";
 const App = () => {
     return (
-        <Home/>
+
+        <Switch>
+            <Route path={'/number-game'} exact component={SinglePlayer} />
+            <Route path={'/multiplayer'} exact component={MultiplayerGmae} />
+        </Switch>
+
   );
 }
 
-export default App;
+export default withRouter(App);

@@ -8,7 +8,7 @@ const StatusBanner: React.FC<StatusProps> = ({status}) => {
     return (
         <PageHeader
             title="Result"
-            subTitle= {`YOU ` + status}
+            subTitle= {status}
         />
     );
 }

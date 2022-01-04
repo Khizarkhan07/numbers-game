@@ -6,10 +6,10 @@ import StatusBanner from "../components/StatusBanner";
 import Slice from "../components/Slice";
 import {Input} from "antd";
 
-const Home = () => {
+const SinglePlayerGame:React.FC = () => {
+
     const {state, dispatch} = useGameContext();
     const [stateValue, setStateValue] = useState({guess: ''})
-    console.log(state.level)
 
     useEffect(()=>{
         if(localStorage.getItem('level')){
@@ -43,14 +43,19 @@ const Home = () => {
         for (let i=1 ; i<= state.level; i ++) {
             setTimeout(function() {
                 dispatch({type: 'START'})
-            },  i*1000*0.95)
+            },  i*1000)
 
         }
     }, [state.level])
 
     const handleNewGame = useCallback(() => {
         dispatch({type: 'NEW_GAME'})
-    },[])
+    },[true])
+
+    const handleModChange = useCallback(() => {
+        window.location.href= '/multiplayer'
+    }, [true])
+
     const Buttons = useMemo(()=> {
         return (
             <ButtonWrapper>
@@ -63,10 +68,10 @@ const Home = () => {
 
     const inputFields = useMemo(() => {
         return (
-                <InputWrapper>
-                    <label htmlFor="guess"><h6>Guess</h6></label>
-                    <Input placeholder="Enter your guess numbers seperated by commas" name="guess" onChange={handleChange}/>
-                </InputWrapper>
+            <InputWrapper>
+                <label htmlFor="guess"><h6>Guess</h6></label>
+                <Input placeholder="Enter your guess numbers seperated by commas" name="guess" onChange={handleChange}/>
+            </InputWrapper>
         )
     }, [stateValue.guess])
 
@@ -80,7 +85,7 @@ const Home = () => {
         return (
             <ButtonWrapper>
                 {state.previousLevel === state.level  && state.level <13 &&
-                    (<Button callback={handleNextLevel} text='NEXT LEVEL' color='#fcba03'/>)}
+                (<Button callback={handleNextLevel} text='NEXT LEVEL' color='#fcba03'/>)}
             </ButtonWrapper>
         )
     }, [state.previousLevel, state.level])
@@ -93,20 +98,28 @@ const Home = () => {
         )
     },[state])
 
+    const modChangeButton  = useMemo(() => {
+        return (
+            <Button color="#ff8c66" text={'Go Double Player'} callback={handleModChange}/>
+        )
+    }, [true])
+
     let circleSlices =[];
 
     for (let i =1 ; i<= state.level; i++){
-       circleSlices.push(
-           <SliceWrapper key={i} value={state.gameState[state.gameState.length-1]}>
-               <Slice value={i} ></Slice>
-           </SliceWrapper>
-       )
+        circleSlices.push(
+            <SliceWrapper key={i} value={state.gameState[state.gameState.length-1]}>
+                <Slice value={i} ></Slice>
+            </SliceWrapper>
+        )
     }
 
 
     return (
         <div className={"container"}>
 
+            {modChangeButton}
+            <hr/>
             {state.status !== 'PENDING' ? (<StatusBanner status={state.status}/>) : ("")}
             {newGame}
             <Circle>
@@ -120,4 +133,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default SinglePlayerGame;
